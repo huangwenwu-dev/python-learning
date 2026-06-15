@@ -6,11 +6,10 @@ def subtract(a, b):
     return a - b
 
 def divide(a, b):
-    if b == 0:
-        return "错误：除数不能为 0"
-    return a / b
-
-if __name__ == "__main__":
-    # 自测区:只在直接运行 mymath.py 时执行
-    print("自测 add:", add(2, 3))
-    print("自测 divide:", divide(10, 0))
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "错误: 除数不能为 0"
+    
+    if __name__ =="__main__":
+        print("自测 divide(10, 0):", divide(10, 0))
