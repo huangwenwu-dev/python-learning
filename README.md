@@ -30,3 +30,7 @@ Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理
    先看错误类型和行号、自己搜，再问 AI"为什么会这样"。
 5. **定期"关掉 AI"自测。**
    每周至少独立完成一个小程序，全程不看任何提示。
+
+
+
+[我的GitHub](https://github.com/huangwenwu-dev/python-learning)
