@@ -1,5 +1,11 @@
 # 第三周笔记：Git/GitHub + 工程
 
+## 📁 本周文件清单
+| 文件 | 练的是什么 |
+|------|-----------|
+| 01_计算器_模块与异常.py | import mymath + try/except 安全计算器 |
+| mymath.py | 自定义模块 add/subtract/divide（被 01 import，保留原名） |
+
 ## 一、用法速查（我要吃透的）
 - Git 日常四步：`init` → `add` → `commit -m "说明"` → `push`
 - 分支：`branch`、`merge`、冲突解决

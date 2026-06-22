@@ -1,5 +1,15 @@
 # 第四周笔记：Pydantic + asyncio
 
+## 📁 本周文件清单
+| 文件 | 练的是什么 |
+|------|-----------|
+| 01_basemodel_入门.py | BaseModel 定义模型、建实例、类型转换 |
+| 02_field_约束.py | Field 的 ge/le/min_length + ValidationError |
+| 03_validator_自定义校验.py | field_validator 自定义校验 + 注册模拟 |
+| 04_asyncio_基础.py | async/await/asyncio.run 三件套（串行） |
+| 05_asyncio_并发对比.py | asyncio.gather 并发 + 同步异步对比 |
+| models.py | 共用的 User 模型（被 01 import，保留原名） |
+
 ## 一、Pydantic 用法速查（我要吃透的）
 - 定义模型：继承 `BaseModel`，字段用**冒号**声明类型 `name: str`
 - 必填 vs 可选：v2 里 `Optional[int]` **仍是必填**！要 `= None` 才真可选（**v2 大坑**）

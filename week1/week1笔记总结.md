@@ -1,5 +1,16 @@
 # 第一周笔记：Python 基础
 
+## 📁 本周文件清单
+| 文件 | 练的是什么 |
+|------|-----------|
+| 01_hello_第一个程序.py | 第一行代码：print |
+| 02_变量_数据类型.py | 变量、type、f-string、input、类型转换 |
+| 03_列表.py | list 的 append/remove/遍历 |
+| 04_字典.py | dict 增删改查、items 遍历 |
+| 05_条件判断.py | if/elif/else、逻辑运算 or |
+| 06_while循环.py | while/break、猜数字(固定答案版) |
+| 07_综合_猜数字游戏.py | random+continue+防呆(capstone) |
+
 ## 一、基础语法速查（我要吃透的）
 - 四种数据类型：`int` / `float` / `str` / `bool`；类型转换 `int()` / `str()` / `float()`
 - 字符串：拼接、f-string `f"我叫{name}"`
