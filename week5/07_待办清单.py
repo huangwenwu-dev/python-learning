@@ -4,7 +4,15 @@ while True:
     print("1.查看全部", "2.添加", "3.删除", "4.退出")
     choice = input("用户输入的数字")
     if choice == "1":
-        print("查看全部")
+        print("---待办清单---")
+        for todo in todos:
+            内容 = todo["content"]
+            状态 = todo["done"]
+            if 状态:
+                状态文字 = "✅ 已完成"
+            else:
+                状态文字 = "⬜ 未完成"
+            print(内容, 状态文字)
     elif choice == "2":
         print("添加")
     elif choice == "3":
