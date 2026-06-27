@@ -17,9 +17,13 @@ while True:
         新内容 = input("请输入待办内容")
         新待办 = {"content":新内容, "done":False}
         todos.append(新待办)
-        print("添加")
+        print("添加成功! ")
     elif choice == "3":
-        print("删除")
+        for 序号, todo in enumerate(todos, start=1):
+            print(序号, todo["content"])
+        序号 = int(input("删第几个: "))
+        todos.pop(序号 - 1)
+        print("删除成功! ")
     elif choice == "4":
         print("退出")
         break
