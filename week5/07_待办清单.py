@@ -14,6 +14,9 @@ while True:
                 状态文字 = "⬜ 未完成"
             print(内容, 状态文字)
     elif choice == "2":
+        新内容 = input("请输入待办内容")
+        新待办 = {"content":新内容, "done":False}
+        todos.append(新待办)
         print("添加")
     elif choice == "3":
         print("删除")
