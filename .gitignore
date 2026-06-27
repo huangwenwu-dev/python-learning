@@ -8,3 +8,5 @@ __pycache__/
 *.txt
 
 config.json
+
+todos.json
