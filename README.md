@@ -6,7 +6,8 @@
 - `week1/` -- 基础语法: 变量、列表、字典、条件判断与循环
 - `week2/` -- 面向对象: 函数、类、继承、封装
 - `week3/` -- 工程工作流: Git、模块化、异常处理
-- `week4/` — 数据校验与异步：Pydantic v2、async/await 并发
+- `week4/` —- 数据校验与异步：Pydantic v2、async/await 并发
+- `week5/` -- 文件读写+JSON持久化
 
 ## ✨ 阶段性产出
 - **猜数字游戏** (week1): 随机出题、计数、防呆输入
@@ -14,9 +15,10 @@
 - **mymath.py 自定义模块** (week3): 含异常处理的计算器
 - **注册表单校验器** (week4)：Pydantic 自定义校验、拦截非法数据、结构化报错
 - **同步/异步并发对比** (week4)：asyncio.gather 实测并发提速
+- **持久化待办清单** (week5): JSON存盘+增删查
 
 ## 🛠️ 已掌握技术点
-Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)
+Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化
 
 ## 📅 学习周期
 2026 年 5 月开始, 每周7天, 目标:24周 能独立开发 AI Agent
