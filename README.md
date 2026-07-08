@@ -8,6 +8,7 @@
 - `week3/` -- 工程工作流: Git、模块化、异常处理
 - `week4/` —- 数据校验与异步：Pydantic v2、async/await 并发
 - `week5/` -- 文件读写+JSON持久化
+- `week6/` -- SQLite + SQL 基础 + 用 Python 操作数据库
 
 ## ✨ 阶段性产出
 - **猜数字游戏** (week1): 随机出题、计数、防呆输入
@@ -16,9 +17,11 @@
 - **注册表单校验器** (week4)：Pydantic 自定义校验、拦截非法数据、结构化报错
 - **同步/异步并发对比** (week4)：asyncio.gather 实测并发提速
 - **持久化待办清单** (week5): JSON存盘+增删查
+- **学生成绩库** (week6): Python + sqlite3 完成增删改查 + 查平均分
+- **SQL速查表** (week6): CRUD + 聚合 + JOIN 自己整理
 
 ## 🛠️ 已掌握技术点
-Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化
+Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查
 
 ## 📅 学习周期
 2026 年 5 月开始, 每周7天, 目标:24周 能独立开发 AI Agent
