@@ -12,3 +12,5 @@ config.json
 todos.json
 
 *.db
+
+*.csv
