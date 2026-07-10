@@ -1,4 +1,4 @@
-# Python 学习之路 🐍
+# AI Agent 学习之路 🐍
 
 记录我从零基础开始学 Python、迈向 AI Agent 开发的全过程。
 
@@ -9,6 +9,7 @@
 - `week4/` —- 数据校验与异步：Pydantic v2、async/await 并发
 - `week5/` -- 文件读写+JSON持久化
 - `week6/` -- SQLite + SQL 基础 + 用 Python 操作数据库
+- `week7/` -- 数据科学基础：NumPy 数组与矩阵运算（摸到 AI 的边，实现极简神经元）
 
 ## ✨ 阶段性产出
 - **猜数字游戏** (week1): 随机出题、计数、防呆输入
@@ -19,9 +20,11 @@
 - **持久化待办清单** (week5): JSON存盘+增删查
 - **学生成绩库** (week6): Python + sqlite3 完成增删改查 + 查平均分
 - **SQL速查表** (week6): CRUD + 聚合 + JOIN 自己整理
+- **极简神经元** (week7)：NumPy 实现 输入 @ 权重 + 偏置，理解神经元 = 加权求和 + 偏置
+- **NumPy速查表** (week7)：创建/索引/reshape/广播/矩阵乘法 自己整理
 
 ## 🛠️ 已掌握技术点
-Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查
+Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查· NumPy 数组与矩阵运算
 
 ## 📅 学习周期
 2026 年 5 月开始, 每周7天, 目标:24周 能独立开发 AI Agent
