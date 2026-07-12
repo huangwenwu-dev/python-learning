@@ -27,3 +27,5 @@ print(df)
 print(df.info())
 print(df.isnull().sum())
 print(df.duplicated().sum())
+
+df.to_csv("week8/clean_sales.csv", index=False)     #  干净数据复制到clean_sales.csv
