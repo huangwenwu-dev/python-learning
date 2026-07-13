@@ -10,6 +10,7 @@
 - `week5/` -- 文件读写+JSON持久化
 - `week6/` -- SQLite + SQL 基础 + 用 Python 操作数据库
 - `week7/` -- 数据科学基础：NumPy 数组与矩阵运算（摸到 AI 的边，实现极简神经元）
+- `week8/` -- 数据分析与可视化: 读/选取与筛选、数据清洗、分组统计、数据可视化
 
 ## ✨ 阶段性产出
 - **猜数字游戏** (week1): 随机出题、计数、防呆输入
@@ -22,9 +23,11 @@
 - **SQL速查表** (week6): CRUD + 聚合 + JOIN 自己整理
 - **极简神经元** (week7)：NumPy 实现 输入 @ 权重 + 偏置，理解神经元 = 加权求和 + 偏置
 - **NumPy速查表** (week7)：创建/索引/reshape/广播/矩阵乘法 自己整理
+- **销售数据分析 + 趋势图**（week8）：脏数据清洗（去重/缺失/类型/空格）→ groupby 分组 → 折线图 + 数据结论
+- **Pandas速查表**（week8）：读取/筛选/清洗/分组/绘图 自己整理
 
 ## 🛠️ 已掌握技术点
-Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查· NumPy 数组与矩阵运算
+Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查· NumPy 数组与矩阵运算· Pandas 数据清洗与分析 · Matplotlib 数据可视化
 
 ## 📅 学习周期
 2026 年 5 月开始, 每周7天, 目标:24周 能独立开发 AI Agent
