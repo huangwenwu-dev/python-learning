@@ -3,7 +3,7 @@ import pandas as pd
 df = pd.read_csv("week8/dirty_data.csv")
 
 # 1. 去重
-df = df.drop_duplicates()
+df = df.drop_duplicates(subset=["订单号"])
 print("去重后:", len(df))
 
 # 2. 去空格 / 杂字符
@@ -12,7 +12,7 @@ df["SALES"] = df["SALES"].str.replace("元", "")
 print(df["地区"].unique())
 
 # 3. 处理缺失
-df["SALES"] = df["SALES"].fillna(0)             # 销量缺失,当 0 单
+df = df.dropna(subset=["SALES"])            
 df["价格"] = df["价格"].fillna(df["价格"].mean())       # 价格缺失,填平均价
 
 # 4. 转类型
