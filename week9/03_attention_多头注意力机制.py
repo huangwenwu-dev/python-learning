@@ -17,4 +17,5 @@ weights = e / row_sum                       # 用每个数除以它所在行的�
 print(weights.sum(axis=1))                  # 检查每一行是否加起来等于 1
 
 output = weights @ V                        # 按百分比混合 V 里的信息
+print(weights)
 print(output.shape)
