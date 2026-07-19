@@ -11,6 +11,8 @@
 - `week6/` -- SQLite + SQL 基础 + 用 Python 操作数据库
 - `week7/` -- 数据科学基础：NumPy 数组与矩阵运算（摸到 AI 的边，实现极简神经元）
 - `week8/` -- 数据分析与可视化: 读/选取与筛选、数据清洗、分组统计、数据可视化
+- `week9/` -- 大模型原理:下一个词预测、注意力、Transformer
+- `week10/` -- 提示工程与 API 调用
 
 ## ✨ 阶段性产出
 - **猜数字游戏** (week1): 随机出题、计数、防呆输入
@@ -25,9 +27,12 @@
 - **NumPy速查表** (week7)：创建/索引/reshape/广播/矩阵乘法 自己整理
 - **销售数据分析 + 趋势图**（week8）：脏数据清洗（去重/缺失/类型/空格）→ groupby 分组 → 折线图 + 数据结论
 - **Pandas速查表**（week8）：读取/筛选/清洗/分组/绘图 自己整理
+- **手算注意力(Numpy)**（week9）：Q@K.T→softmax→@V
+- **提示策略测评表**（week10）：三策略×多任务，含稳定性列（跑三次看一致性）
+- **API封装函数**（week10）：五环：调用→解析→Pydantic校验→异常→重试
 
 ## 🛠️ 已掌握技术点
-Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查· NumPy 数组与矩阵运算· Pandas 数据清洗与分析 · Matplotlib 数据可视化
+Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 · 数据校验(Pydantic) · 异步编程(asyncio)· 文件读写和JSON序列化· SQLite 数据库 / SQL 增删改查· NumPy 数组与矩阵运算· Pandas 数据清洗与分析 · Matplotlib 数据可视化·Transformer 原理 · 注意力机制 · 提示工程 · Few-shot/CoT · API 调用与稳定 JSON · Pydantic 校验闭环
 
 ## 📅 学习周期
 2026 年 5 月开始, 每周7天, 目标:24周 能独立开发 AI Agent
@@ -44,6 +49,7 @@ Python 基础 · 面向对象编程 · Git/GitHub · 模块化 · 异常处理 �
    先看错误类型和行号、自己搜，再问 AI"为什么会这样"。
 5. **定期"关掉 AI"自测。**
    每周至少独立完成一个小程序，全程不看任何提示。
+## 🤖 我的 AI 使用守则(第 11 周起 · 结对编程)
 
 
 
