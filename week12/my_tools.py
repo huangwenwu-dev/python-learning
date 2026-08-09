@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from langchain.tools import tool
 from datetime import datetime
 
@@ -18,6 +18,12 @@ class GetWeatherInput(BaseModel):
         default="celsius",
         description="返回的温度单位，只能是 'celsius'（摄氏度）或 'fahrenheit'（华氏度），不接受其他取值"
     )
+
+    @field_validator("units", mode="before")
+    @classmethod
+    def normalize_units(cls, v): 
+        对照表 = {"摄氏度": "celsius", "华氏度": "fahrenheit"}
+        return 对照表.get(v, v)
 
 # args_schema 关联上面定义的参数模型，函数签名可以简单写，真正的约束和说明看 schema
 @tool(args_schema=GetWeatherInput)
