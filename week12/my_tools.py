@@ -55,11 +55,6 @@ def get_weather(city: str, units: Literal["celsius", "fahrenheit"] = "celsius") 
         # 捕获所有异常，返回错误说明字符串而不是抛出，避免中断 agent 的执行流程
         return f"查询天气时出错：{str(e)}"
 
-# invoke 手动调用工具做测试；注意 units 传了非法值 "摄氏度"，
-# 不在 Literal 允许范围内，用来验证 pydantic 的校验是否生效
-print(get_weather.invoke({"city": "北京", "units": "摄氏度"}))
-
-
 # 没写 args_schema：@tool 会根据函数签名 + 类型注解自动生成参数 schema
 # （city 目前没用到，是简化版实现，实时时间不依赖城市）
 @tool
@@ -70,12 +65,16 @@ def get_time(city: str) -> str:
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
     return timestamp
-print(get_time.invoke({"city": "北京"}))
+if __name__ == "__main__":
+    print(get_time.invoke({"city": "北京"}))
 
-# 以下几行是在看 @tool 自动生成了什么：工具名、描述（取自 docstring）、
-# 参数模型对象、以及该模型对应的 JSON Schema（LLM 最终看到的就是这份 schema）
-print(get_time.name)
-print(get_time.description)
-print(get_time.args_schema)
-print(get_time.args_schema.model_json_schema())
-    
+    # 以下几行是在看 @tool 自动生成了什么：工具名、描述（取自 docstring）、
+    # 参数模型对象、以及该模型对应的 JSON Schema（LLM 最终看到的就是这份 schema）
+    print(get_time.name)
+    print(get_time.description)
+    print(get_time.args_schema)
+    print(get_time.args_schema.model_json_schema())
+
+    # invoke 手动调用工具做测试；注意 units 传了非法值 "摄氏度"，
+    # 不在 Literal 允许范围内，用来验证 pydantic 的校验是否生效
+    print(get_weather.invoke({"city": "北京", "units": "摄氏度"}))
