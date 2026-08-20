@@ -3,7 +3,6 @@ import json
 import numpy as np
 from dotenv import load_dotenv
 from openai import OpenAI
-from pydantic import BaseModel, Field, ValidationError
 
 load_dotenv()  # 读取 .env 到环境变量
 deepseek_client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")  # 用于生成回答（LLM）
@@ -130,4 +129,5 @@ def main():
             break
         答案 = ask(a, index)
         print(答案)
-main()
+if __name__ == "__main__":
+    main()

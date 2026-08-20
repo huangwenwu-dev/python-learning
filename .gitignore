@@ -16,3 +16,4 @@ todos.json
 *.csv
 .env
 *index.json
+chroma_db
