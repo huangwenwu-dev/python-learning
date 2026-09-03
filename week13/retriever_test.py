@@ -25,8 +25,8 @@ def search(query, source=None, k=3):
     if not docs:
         print("没有找到相关内容")
         return
-    for d in docs:
-        print(d.metadata, "|", d.page_content[:100])
-search("年假怎么算")
-search("年假怎么算", source="ai agent未来发展趋势.txt")
-search("年假怎么算", source="电商运营资料.txt")
+    return docs
+if __name__ == "__main__":
+    search("年假怎么算")
+    search("年假怎么算", source="ai agent未来发展趋势.txt")
+    search("年假怎么算", source="电商运营资料.txt")
