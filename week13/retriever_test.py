@@ -27,6 +27,6 @@ def search(query, source=None, k=3):
         return
     return docs
 if __name__ == "__main__":
-    search("年假怎么算")
-    search("年假怎么算", source="ai agent未来发展趋势.txt")
-    search("年假怎么算", source="电商运营资料.txt")
+    docs = search("员工手册", source="电商公司员工手册.txt", k=4)
+    for d in docs:
+        print(d.metadata['chunk_index'], d.page_content[:150])
