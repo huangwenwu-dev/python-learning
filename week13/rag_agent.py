@@ -26,19 +26,19 @@ agent = create_agent(
     ],
 )
 
-config = {"configurable": {"thread_id": "day6-test"}}
-
-while True:
-    q = input("你: ")
-    if q == "quit":
-        break
-    result = agent.invoke({"messages": [{"role": "user", "content": q}]}, config)
-    print(result["messages"][-1].content)
-    tool_msgs = [m for m in result["messages"] if m.__class__.__name__ == "ToolMessage"]
-    if tool_msgs:
-        print(f"[日志] 检索了，共 {len(tool_msgs)} 次")
-        for m in tool_msgs:
-            print(f"[日志] 返回前80字: {m.content[:200]}")
-    else:
-        print("[日志] 未检索")
-    print(f"[日志] token: {result['messages'][-1].usage_metadata}")
+if __name__ == "__main__":
+    config = {"configurable": {"thread_id": "day6-test"}}
+    while True:
+        q = input("你: ")
+        if q == "quit":
+            break
+        result = agent.invoke({"messages": [{"role": "user", "content": q}]}, config)
+        print(result["messages"][-1].content)
+        tool_msgs = [m for m in result["messages"] if m.__class__.__name__ == "ToolMessage"]
+        if tool_msgs:
+            print(f"[日志] 检索了，共 {len(tool_msgs)} 次")
+            for m in tool_msgs:
+                print(f"[日志] 返回前80字: {m.content[:200]}")
+        else:
+            print("[日志] 未检索")
+        print(f"[日志] token: {result['messages'][-1].usage_metadata}")
