@@ -1,0 +1,32 @@
+第 1 条: write_file notes.txt
+is_error: False
+已覆盖写入：C:\Users\文\Desktop\python-learning\week16\sandbox\notes.txt（6 字节）
+----------------------------------------
+第 2 条: write_file notes.txt
+is_error: False
+已覆盖写入：C:\Users\文\Desktop\python-learning\week16\sandbox\notes.txt（6 字节）
+----------------------------------------
+第 3 条: write_file ../hack.txt
+is_error: False
+拒绝：路径「../hack.txt」超出 sandbox 范围
+----------------------------------------
+第 4 条: write_file C:\Users\Public\hack.txt
+is_error: False
+拒绝：路径「C:\Users\Public\hack.txt」超出 sandbox 范围
+----------------------------------------
+第 5 条: write_file 没有的文件夹/x.txt
+is_error: False
+拒绝：父目录「C:\Users\文\Desktop\python-learning\week16\sandbox\没有的文件夹」不存在，请先创建目录
+----------------------------------------
+第 6 条: read_file ../tools_server.py
+is_error: False
+拒绝：路径「../tools_server.py」超出 sandbox 范围
+----------------------------------------
+第 7 条: read_file ../../README.md
+is_error: False
+拒绝：路径「../../README.md」超出 sandbox 范围
+----------------------------------------
+第 8 条: read_file C:\Windows\win.ini
+is_error: False
+拒绝：路径「C:\Windows\win.ini」超出 sandbox 范围
+----------------------------------------

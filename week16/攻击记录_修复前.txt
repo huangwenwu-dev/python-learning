@@ -1,0 +1,29 @@
+攻击路径: ../tools_server.py
+is_error: False
+from pathlib import Path
+from typing import Annotated
+
+from pydantic import Field
+
+from mcp.server i
+----------------------------------------
+攻击路径: ../../README.md
+is_error: False
+# AI Agent 学习之路 🐍
+
+记录我从零基础开始学 Python、迈向 AI Agent 开发的全过程。
+
+## 📖 项目结构
+- `week1/` -- 基础语法: 变量、列表、字典、条件判
+----------------------------------------
+攻击路径: C:\Windows\win.ini
+is_error: False
+; for 16-bit app support
+[fonts]
+[extensions]
+[mci extensions]
+[files]
+[Mail]
+MAPI=1
+
+----------------------------------------
