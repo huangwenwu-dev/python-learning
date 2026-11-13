@@ -24,3 +24,4 @@ eval_dataset.jsonl
 .claude
 checkpoints_day6.db-shm
 checkpoints_day6.db-wal
+venv_b/
