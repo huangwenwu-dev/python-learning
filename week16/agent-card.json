@@ -1,0 +1,27 @@
+{
+  "name": "智能旅行agent",
+  "description": "告诉我城市和天数，我帮你出行程和预算",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "http://localhost:8000/",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "skills": [
+    {
+      "id": "trip-planning",
+      "name": "智能规划行程",
+      "description": "根据城市、天数和天气，自动判断安排室内还是室外行程，并预估花费。需要你提供：城市、游玩天数。会返回：行程安排、预算。",
+      "tags": ["旅行", "行程规划", "预算"],
+      "examples": ["帮我规划成都3天的行程和预算"]
+    }
+  ]
+}

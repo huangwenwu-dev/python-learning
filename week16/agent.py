@@ -2,7 +2,7 @@ import asyncio
 
 from dotenv import load_dotenv
 from langchain.agents import create_agent
-from langchain_mcp_adapters.client import MultiServerMCPClient
+from langchain_mcp_adapters.client import MultiServerMCPClient  # type: ignore
 
 load_dotenv()
 
