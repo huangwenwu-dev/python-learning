@@ -5,7 +5,7 @@ from pydantic import Field
 
 SANDBOX = Path(__file__).parent / "sandbox"
 
-@mcp.tool()
+@mcp.tool()     # type: ignore
 def read_file(
     path:Annotated[str, Field(description="sandbox 文件夹里的文件名, 例如 a.txt")]) -> str:
     """读取 sandbox 文件夹中指定文件的文本内容"""
