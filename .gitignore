@@ -25,3 +25,4 @@ eval_dataset.jsonl
 checkpoints_day6.db-shm
 checkpoints_day6.db-wal
 venv_b/
+venv_crew/
