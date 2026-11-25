@@ -9,6 +9,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import interrupt, Command
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
+from openai import AuthenticationError, APIConnectionError, APITimeoutError
 
 load_dotenv()
 llm = init_chat_model("deepseek-v4-pro", model_provider="deepseek")
@@ -42,6 +43,7 @@ class TripState(TypedDict):
     itinerary: str     # make_itinerary 交
     budget: int        # check_budget 交
     decision: str      # ask_human 交
+    error: str          # make_itinerary 失败时交，成功不交
     logs: Annotated[list, add]
 
 
@@ -76,7 +78,20 @@ def make_itinerary(state: TripState, config: RunnableConfig):
         f"city={state['city']}, days={state['days']}, weather={state['weather']}, style={style}",
     )
     _log(logging.INFO, "make_itinerary", config, "开始调模型")
-    itinerary = llm.invoke(prompt).content
+    try:
+        itinerary = llm.invoke(prompt).content
+    except AuthenticationError as e:
+        elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
+        _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
+        return {"style": style, "itinerary": "行程生成失败（原因：key 不对）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
+    except APITimeoutError as e:
+        elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
+        _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
+        return {"style": style, "itinerary": "行程生成失败（原因：超时）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
+    except APIConnectionError as e:
+        elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
+        _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
+        return {"style": style, "itinerary": "行程生成失败（原因：连不上）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
     _log(logging.INFO, "make_itinerary", config, f"模型返回，共 {len(itinerary)} 字")
     elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
     _log(logging.INFO, "make_itinerary", config, f"执行结束，耗时 {elapsed_ms}ms")
@@ -99,7 +114,8 @@ def ask_human(state: TripState, config: RunnableConfig):
     print("[ask_human] 开始执行")
     _log(logging.INFO, "ask_human", config, "开始执行")
     t0 = time.monotonic()
-    answer = interrupt(f"行程:{state['itinerary']},预算 {state['budget']} 元,批准吗?")
+    prefix = "⚠ 行程生成失败\n" if state.get("error") else ""
+    answer = interrupt(f"{prefix}行程:{state['itinerary']},预算 {state['budget']} 元,批准吗?")
     print("[ask_human] 拿到回答:", answer)
     elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
     _log(logging.INFO, "ask_human", config, f"执行结束，耗时 {elapsed_ms}ms")
