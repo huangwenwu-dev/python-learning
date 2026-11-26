@@ -1,4 +1,5 @@
 import logging
+import random
 import time
 from pathlib import Path
 from typing import Annotated, TypedDict
@@ -9,10 +10,11 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import interrupt, Command
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
-from openai import AuthenticationError, APIConnectionError, APITimeoutError
+from openai import AuthenticationError, APIConnectionError, APITimeoutError, RateLimitError
 
 load_dotenv()
-llm = init_chat_model("deepseek-v4-pro", model_provider="deepseek")
+# max_retries=0：关掉 DeepSeek 客户端（openai SDK）自带的重试，只用 _invoke_with_retry 这一层
+llm = init_chat_model("deepseek-v4-pro", model_provider="deepseek", max_retries=0)
 
 # 日志：按本文件所在目录定位 logs/trip.log，不管从哪个目录运行都写到 week18/logs/ 下
 LOG_DIR = Path(__file__).resolve().parent / "logs"
@@ -63,6 +65,24 @@ def check_weather(state: TripState, config: RunnableConfig):
     return {"weather": weather, "logs": ["check_weather 来过"]}
 
 
+_RETRYABLE_ERRORS = (APIConnectionError, APITimeoutError, RateLimitError)
+_RETRY_DELAYS = [2, 4, 8]
+
+
+def _invoke_with_retry(prompt: str, node: str, config: RunnableConfig):
+    for attempt, delay in enumerate(_RETRY_DELAYS):
+        try:
+            return llm.invoke(prompt).content
+        except _RETRYABLE_ERRORS as e:
+            wait = delay + random.uniform(0, 1)
+            _log(
+                logging.WARNING, node, config,
+                f"第{attempt + 1}次重试，异常类名={type(e).__name__}，等待{wait:.1f}秒",
+            )
+            time.sleep(wait)
+    return llm.invoke(prompt).content
+
+
 # ④ 任务2:生成行程
 def make_itinerary(state: TripState, config: RunnableConfig):
     print("[make_itinerary] 收到:", state)
@@ -79,7 +99,7 @@ def make_itinerary(state: TripState, config: RunnableConfig):
     )
     _log(logging.INFO, "make_itinerary", config, "开始调模型")
     try:
-        itinerary = llm.invoke(prompt).content
+        itinerary = _invoke_with_retry(prompt, "make_itinerary", config)
     except AuthenticationError as e:
         elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
         _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
@@ -92,6 +112,10 @@ def make_itinerary(state: TripState, config: RunnableConfig):
         elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
         _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
         return {"style": style, "itinerary": "行程生成失败（原因：连不上）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
+    except RateLimitError as e:
+        elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
+        _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
+        return {"style": style, "itinerary": "行程生成失败（原因：限流）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
     _log(logging.INFO, "make_itinerary", config, f"模型返回，共 {len(itinerary)} 字")
     elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
     _log(logging.INFO, "make_itinerary", config, f"执行结束，耗时 {elapsed_ms}ms")
