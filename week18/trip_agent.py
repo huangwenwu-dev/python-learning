@@ -1,3 +1,4 @@
+import json
 import logging
 import random
 import time
@@ -29,6 +30,11 @@ _file_handler.setFormatter(logging.Formatter(
 ))
 logger.addHandler(_file_handler)
 logger.propagate = False  # 不往 root logger 冒泡，屏幕上只保留原有的 print
+
+# 缓存：按 版本号|城市|天数|style 做键，weather 不进键（已经折算成 style 了）
+PROMPT_VERSION = "v1"
+CACHE_DIR = Path(__file__).resolve().parent / "cache"
+CACHE_FILE = CACHE_DIR / "itinerary_cache.json"
 
 
 def _log(level: int, node: str, config: RunnableConfig, message: str) -> None:
@@ -83,6 +89,40 @@ def _invoke_with_retry(prompt: str, node: str, config: RunnableConfig):
     return llm.invoke(prompt).content
 
 
+def _read_cache(key: str, config: RunnableConfig) -> str | None:
+    if not CACHE_FILE.exists():
+        return None
+    try:
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        _log(logging.WARNING, "make_itinerary", config, f"缓存文件读取失败，当作未命中，异常类名={type(e).__name__}")
+        return None
+    if not isinstance(data, dict):
+        _log(logging.WARNING, "make_itinerary", config, "缓存文件内容不是字典，当作未命中")
+        return None
+    return data.get(key)
+
+
+def _write_cache(key: str, value: str, config: RunnableConfig) -> None:
+    try:
+        CACHE_DIR.mkdir(exist_ok=True)
+        data = {}
+        if CACHE_FILE.exists():
+            try:
+                with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                    loaded = json.load(f)
+                if isinstance(loaded, dict):
+                    data = loaded
+            except (OSError, json.JSONDecodeError):
+                data = {}
+        data[key] = value
+        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        _log(logging.WARNING, "make_itinerary", config, f"缓存写入失败，异常类名={type(e).__name__}")
+
+
 # ④ 任务2:生成行程
 def make_itinerary(state: TripState, config: RunnableConfig):
     print("[make_itinerary] 收到:", state)
@@ -92,6 +132,14 @@ def make_itinerary(state: TripState, config: RunnableConfig):
         style = "室内"
     else:
         style = "户外"
+    cache_key = f"{PROMPT_VERSION}|{state['city']}|{state['days']}|{style}"
+    cached = _read_cache(cache_key, config)
+    if cached is not None:
+        _log(logging.INFO, "make_itinerary", config, f"缓存命中，key={cache_key}")
+        elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
+        _log(logging.INFO, "make_itinerary", config, f"执行结束，耗时 {elapsed_ms}ms")
+        return {"style": style, "itinerary": cached, "logs": ["make_itinerary 来过"]}
+    _log(logging.INFO, "make_itinerary", config, f"缓存未命中，key={cache_key}")
     prompt = f"请为去{state['city']}玩{state['days']}天、倾向{style}活动的行程，写一段100字以内的中文行程描述。"
     _log(
         logging.DEBUG, "make_itinerary", config,
@@ -117,6 +165,7 @@ def make_itinerary(state: TripState, config: RunnableConfig):
         _log(logging.ERROR, "make_itinerary", config, f"调模型失败，异常类名={type(e).__name__}，耗时 {elapsed_ms}ms")
         return {"style": style, "itinerary": "行程生成失败（原因：限流）", "error": type(e).__name__, "logs": ["make_itinerary 来过"]}
     _log(logging.INFO, "make_itinerary", config, f"模型返回，共 {len(itinerary)} 字")
+    _write_cache(cache_key, itinerary, config)
     elapsed_ms = round((time.monotonic() - t0) * 1000, 1)
     _log(logging.INFO, "make_itinerary", config, f"执行结束，耗时 {elapsed_ms}ms")
     return {"style": style, "itinerary": itinerary, "logs": ["make_itinerary 来过"]}

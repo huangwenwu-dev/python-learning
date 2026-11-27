@@ -27,3 +27,4 @@ checkpoints_day6.db-wal
 venv_b/
 venv_crew/
 logs/
+cache/
