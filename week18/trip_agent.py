@@ -37,6 +37,10 @@ CACHE_DIR = Path(__file__).resolve().parent / "cache"
 CACHE_FILE = CACHE_DIR / "itinerary_cache.json"
 
 
+def _cache_key(city: str, days: int, style: str) -> str:
+    return f"{PROMPT_VERSION}|{city}|{days}|{style}"
+
+
 def _log(level: int, node: str, config: RunnableConfig, message: str) -> None:
     thread_id = config.get("configurable", {}).get("thread_id", "unknown")
     logger.log(level, message, extra={"node": node, "thread_id": thread_id})
@@ -132,7 +136,7 @@ def make_itinerary(state: TripState, config: RunnableConfig):
         style = "室内"
     else:
         style = "户外"
-    cache_key = f"{PROMPT_VERSION}|{state['city']}|{state['days']}|{style}"
+    cache_key = _cache_key(state['city'], state['days'], style)
     cached = _read_cache(cache_key, config)
     if cached is not None:
         _log(logging.INFO, "make_itinerary", config, f"缓存命中，key={cache_key}")
